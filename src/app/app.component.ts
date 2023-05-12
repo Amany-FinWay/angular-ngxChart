@@ -1,7 +1,5 @@
-import { Component, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
-import { single } from './data';
+import { Component } from '@angular/core';
+import { AgChartOptions } from 'ag-charts-community'
 
 @Component({
   selector: 'app-root',
@@ -9,39 +7,61 @@ import { single } from './data';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  single?: any;
-  view: any = [700, 400];
+  bankNames = ['CIB', 'NBK', 'QNB' , 'BDC'];
+  bankInfo = [
+    [
+      { name: 'Opened Tickets', value: 2000 },
+      { name: 'Closed Tickets', value: 1500 },
+      { name: 'Cancelled Tickets', value: 300 },
+      { name: 'Suspended Tickets', value: 100 },
+    ],
+    [
+      { name: 'Opened Tickets', value: 600 },
+      { name: 'Closed Tickets', value: 1200 },
+      { name: 'Cancelled Tickets', value: 600 },
+      { name: 'Suspended Tickets', value: 200 },
+    ],
+    [
+      { name: 'Opened Tickets', value: 1000 },
+      { name: 'Closed Tickets', value: 1600 },
+      { name: 'Cancelled Tickets', value: 600 },
+      { name: 'Suspended Tickets', value: 170 },
+    ],
+    [
+      { name: 'Opened Tickets', value: 600 },
+      { name: 'Closed Tickets', value: 700 },
+      { name: 'Cancelled Tickets', value: 800 },
+      { name: 'Suspended Tickets', value: 900 },
+    ],
+  ];
+  chartOptions: any = [];
+  public options!: AgChartOptions;
 
-  // options
-  showXAxis: boolean = true;
-  showYAxis: boolean = true;
-  gradient: boolean = false;
-  showLegend: boolean = true;
-  showXAxisLabel: boolean = true;
-  yAxisLabel: string = 'Countryyy';
-  showYAxisLabel: boolean = true;
-  xAxisLabel: string = 'Population';
-
-  colorScheme: Color = {
-    name: 'myScheme',
-    selectable: true,
-    group: ScaleType.Ordinal,
-    domain: ['#f00', '#0f0', '#0ff'],
-  };
 
   constructor() {
-    Object.assign(this, { single });
-  }
-
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    for (let i = 0; i < this.bankNames.length; i++) {
+      this.chartOptions.push('option' + [i]);
+      this.chartOptions[i] = this.options;
+      this.chartOptions[i] = {
+        autoSize: true,
+        title: {
+          text: this.bankNames[i],
+          fontSize: 18,
+          spacing: 25,
+        },
+        series: [
+          {
+            data: this.bankInfo[i],
+            type: 'pie',
+            calloutLabelKey: 'name',
+            sectorLabelKey: 'value',
+            angleKey: 'value',
+          },
+        ],
+        legend: {
+          enabled: true,
+        },
+      }
+    }
   }
 }
