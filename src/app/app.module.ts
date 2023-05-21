@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgChartsAngularModule } from 'ag-charts-angular';
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent
@@ -13,7 +13,8 @@ import { AgChartsAngularModule } from 'ag-charts-angular';
     BrowserModule,
     AppRoutingModule,
     AgChartsAngularModule,
-    BrowserAnimationsModule 
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,15 @@
+<ul>
+    <li> <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();"/>All Banks
+    </li>
+    <li *ngFor="let n of bankNames.slice(1)"> 
+    <input type="checkbox" [(ngModel)]="n.selected" [value]="n.name" (change)="checkIfAllSelected($event);">
+    {{n.name}}
+    </li>
+  </ul>
 
-<ag-charts-angular [options]="allBanksOption" style="height: 100%"></ag-charts-angular>
+
+
+<ag-charts-angular *ngIf="selectedAll" [options]="allBanksOption" style="height: 100%"></ag-charts-angular>
 <hr style="padding: 2rem; margin-bottom: 2rem;">
 <hr style="padding: 2rem; margin-bottom: 2rem;">
 <hr style="padding: 2rem; margin-bottom: 2rem;">
