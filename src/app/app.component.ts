@@ -35,7 +35,10 @@ export class AppComponent {
     ],
   ];
   chartOptions: any = [];
+  allBankInfo: any = []
   public options!: AgChartOptions;
+  public allBanksOption!: AgChartOptions;
+  
 
 
   constructor() {
@@ -62,6 +65,67 @@ export class AppComponent {
           enabled: true,
         },
       }
+    }
+
+
+
+
+    // Push all objects into new array    
+    const newArray: { name: string; value: number; }[] = [];
+    
+    this.bankInfo.forEach((innerArray) => {
+      innerArray.forEach((object) => {
+        newArray.push(object);
+        this.allBankInfo.push(object)
+      });
+    });
+    
+    console.log(this.allBankInfo);
+
+
+    // Sum all matched names' values
+
+    var holder: any = {};
+
+    this.allBankInfo.forEach(function (d: { name: string | number; value: any; }) {
+      if (holder.hasOwnProperty(d.name)) {
+        holder[d.name] = holder[d.name] + d.value;
+      } else {
+        holder[d.name] = d.value;
+      }
+    });
+
+    var obj2 = [];
+
+    for (var prop in holder) {
+      obj2.push({ name: prop, value: holder[prop] });
+    }
+
+    this.bankNames.unshift('All Banks');
+    this.bankInfo.unshift(obj2);
+    console.log(obj2);
+
+
+
+    this.allBanksOption = {
+      autoSize: true,
+      title: {
+        text: this.bankNames[0],
+        fontSize: 18,
+        spacing: 25,
+      },
+      series: [
+        {
+          data: obj2,
+          type: 'pie',
+          calloutLabelKey: 'name',
+          sectorLabelKey: 'value',
+          angleKey: 'value',
+        },
+      ],
+      legend: {
+        enabled: true,
+      },
     }
   }
 }
